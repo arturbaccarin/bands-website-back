@@ -1,6 +1,7 @@
 package database
 
 import (
+	"log"
 	"os"
 
 	"github.com/arturbaccarin/bands-website-back/pkg/utils"
@@ -24,7 +25,7 @@ func (Config) setup() (dsn string) {
 	dbUser := os.Getenv("DB_USER")
 	dbPass := os.Getenv("DB_PASS")
 
-	dsn = utils.ConcatenateStrings(dbUser, ":", dbPass, "@tcp(127.0.0.1:3306)/bands")
+	dsn = utils.ConcatenateStrings(dbUser, ":", dbPass, "@tcp(localhost:3306)/bands?charset=utf8&parseTime=True&loc=Local")
 
 	return
 }
@@ -36,6 +37,7 @@ func (c Config) connect() (db *gorm.DB) {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
+		log.Fatal(err)
 		panic("failed to connect database")
 	}
 

@@ -4,16 +4,14 @@ import (
 	"fmt"
 
 	"github.com/arturbaccarin/bands-website-back/pkg/database"
-	"github.com/joho/godotenv"
 )
 
+// init start db configs
+func init() {
+	database.Config{}.Start()
+}
+
 func main() {
-	err := godotenv.Load(".env")
-
-	if err != nil {
-		panic("error in load env file")
-	}
-
 	db := database.DB_GORM
 
 	fmt.Println(db.Config)
